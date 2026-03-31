@@ -1,4 +1,4 @@
-# AutoVault
+# 🚗 AutoMobile
 ### Car Showroom Management System — Android Application
 
 <br>
@@ -10,7 +10,6 @@
 ## Table of Contents
 
 - [Overview](#overview)
-- [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Architecture](#architecture)
 - [Directory Structure](#directory-structure)
@@ -21,18 +20,17 @@
 - [Environment Setup](#environment-setup)
 - [Build & Run](#build--run)
 - [Conventions](#conventions)
-- [Roadmap](#roadmap)
 
 ## Overview
 
-AutoVault is a production-grade Flutter application designed for car showroom businesses. It provides a unified platform for showroom owners, sales employees, and suppliers — each with a tailored experience and role-scoped access. The app covers the complete sales lifecycle: from logging a walk-in customer and scheduling a test drive, all the way through to generating a receipt and setting up a loan repayment plan.
+AutoMobile is a production-grade Flutter application designed for car showroom businesses. It provides a unified platform for showroom owners, sales employees, and suppliers — each with a tailored experience and role-scoped access. The app covers the complete sales lifecycle: from logging a walk-in customer and scheduling a test drive, all the way through to generating a receipt and setting up a loan repayment plan.
 
 The application is built for Android, follows a feature-first clean architecture, and uses Firebase as its backend with Hive for offline caching.
 
 ## Tech Stack
 
 | Layer | Technology |
-|||
+|---|---|
 | **Framework** | Flutter 3.x (Dart) |
 | **State Management** | Riverpod (`riverpod_annotation` + code generation) |
 | **Navigation** | GoRouter (reactive auth-aware routing) |
@@ -46,7 +44,7 @@ The application is built for Android, follows a feature-first clean architecture
 
 ## Architecture
 
-AutoVault follows a **feature-first clean architecture** with a Repository pattern to allow seamless switching between mock data and live Firestore without changing feature-level code.
+AutoMobile follows a **feature-first clean architecture** with a Repository pattern to allow seamless switching between mock data and live Firestore without changing feature-level code.
 
 ```
 UI Layer (Screens & Widgets)
@@ -65,6 +63,8 @@ Key architectural decisions:
 - **Freezed models** — all data models are immutable with `copyWith`, `==`, and `fromJson/toJson` auto-generated.
 - **Repository pattern** — a `useMockData` flag in each repository switches between local mock data and live Firestore, enabling development without a live backend.
 - **Role-based navigation guards** — GoRouter's `redirect` callback reads `authProvider` to enforce role-appropriate routing at the navigation level, not just the UI level.
+
+---
 
 ## Directory Structure
 
@@ -263,11 +263,12 @@ Three-view scheduler for managing test drives across the sales pipeline.
 - **Test Drive Detail** — Status banner with pulse animation, core details, activity log, and context-sensitive action buttons. Completed drives show a **"Convert to Sale"** button that pre-fills the Purchase Form.
 - **Add/Edit Sheet** — Customer and car pickers, date/time selector, duration, employee assignment with availability check, real-time conflict detection.
 
+---
 
 ## Data Models
 
 | Model | Key Fields |
-|||
+|---|---|
 | `UserModel` | id, email, firstName, lastName, phone, role, showroomId |
 | `ShowroomModel` | id, name, gstNumber, address, city, state, ownerId, showroomCode |
 | `CarModel` | id, make, model, year, vin, condition, fuelType, status, purchasePrice, sellingPrice |
@@ -281,7 +282,6 @@ Three-view scheduler for managing test drives across the sales pipeline.
 | `TestDriveModel` | id, customerId, carId, assignedEmployeeId, scheduledAt, duration, status, activityLog, convertedToPurchaseId |
 | `TestDriveActivityModel` | id, timestamp, description, type |
 | `ShiftModel` | isActive, startTime, endTime, elapsedDuration |
-
 
 ## Getting Started
 
@@ -320,7 +320,38 @@ For continuous generation during development:
 dart run build_runner watch --delete-conflicting-outputs
 ```
 
+---
 
+## Environment Setup
+
+### Firebase Configuration
+
+1. Create a Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
+2. Register an Android app with your package name (`com.yourorg.automobile`)
+3. Download `google-services.json` and place it in `android/app/`
+4. Enable **Authentication** (Email/Password provider)
+5. Create a **Firestore** database in production mode
+6. Enable **Firebase Storage**
+
+## Build & Run
+
+### Debug
+
+```bash
+flutter run
+```
+
+### Release APK
+
+```bash
+flutter build apk --release
+```
+
+### Release App Bundle (for Play Store)
+
+```bash
+flutter build appbundle --release
+```
 
 ## Conventions
 
@@ -355,12 +386,10 @@ class CarsNotifier extends _$CarsNotifier { ... }
 ### File Naming
 All files use `snake_case`. All classes use `PascalCase`. Feature folders mirror the navigation structure.
 
-
 ## License
 
 This project is proprietary software developed for a private client. All rights reserved.
 
-
 <br>
 
-<p align="center">Built with Flutter 💙 — Designed for India's automotive retail market</p>
+<p align="center">Built with Flutter 💙</p>
