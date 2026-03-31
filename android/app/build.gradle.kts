@@ -25,19 +25,24 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
-    defaultConfig {
-        applicationId = "com.example.autovault"
-        minSdk = flutter.minSdkVersion
-        targetSdk = 36
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+defaultConfig {
+    applicationId = "com.example.autovault"
+    minSdk = flutter.minSdkVersion
+    targetSdk = 36
+    versionCode = flutter.versionCode
+    versionName = flutter.versionName
+    androidResources {
+        localeFilters += "en"   // replaces deprecated resConfig
     }
+}
 
-    buildTypes {
-        release {
-            signingConfig = signingConfigs.getByName("debug")
-        }
+buildTypes {
+    release {
+        signingConfig = signingConfigs.getByName("debug")
+        isMinifyEnabled = true       // not minifyEnabled
+        isShrinkResources = true     // not shrinkResources
     }
+}
 }
 
 flutter {
