@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1014568359191",
+    "project_id": "autvault",
+    "storage_bucket": "autvault.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014568359191:android:dc777c154c5dc34b4d1352",
+        "android_client_info": {
+          "package_name": "com.example.autovault"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUSKE2IrkJ3-XartFpJiTX54bPTzJATdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
