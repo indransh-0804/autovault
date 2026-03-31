@@ -26,7 +26,7 @@ GoRouter goRouter(GoRouterRef ref) {
   final authState = ref.watch(authNotifierProvider);
 
   return GoRouter(
-    initialLocation: '/employee_dashboard',
+    initialLocation: '/signin',
     debugLogDiagnostics: true,
     redirect: (context, state) {
       final isAuth = authState.isAuthenticated;
