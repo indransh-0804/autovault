@@ -7,8 +7,6 @@
 
 <br>
 
-
-
 ## Table of Contents
 
 - [Overview](#overview)
@@ -25,15 +23,11 @@
 - [Conventions](#conventions)
 - [Roadmap](#roadmap)
 
-
-
 ## Overview
 
 AutoVault is a production-grade Flutter application designed for car showroom businesses. It provides a unified platform for showroom owners, sales employees, and suppliers — each with a tailored experience and role-scoped access. The app covers the complete sales lifecycle: from logging a walk-in customer and scheduling a test drive, all the way through to generating a receipt and setting up a loan repayment plan.
 
 The application is built for Android, follows a feature-first clean architecture, and uses Firebase as its backend with Hive for offline caching.
-
-
 
 ## Tech Stack
 
@@ -49,8 +43,6 @@ The application is built for Android, follows a feature-first clean architecture
 | **Models** | Freezed + `json_serializable` |
 | **Image Handling** | `flutter_image_compress` |
 | **Utilities** | `intl` (INR currency + date formatting), `url_launcher` |
-
-
 
 ## Architecture
 
@@ -73,8 +65,6 @@ Key architectural decisions:
 - **Freezed models** — all data models are immutable with `copyWith`, `==`, and `fromJson/toJson` auto-generated.
 - **Repository pattern** — a `useMockData` flag in each repository switches between local mock data and live Firestore, enabling development without a live backend.
 - **Role-based navigation guards** — GoRouter's `redirect` callback reads `authProvider` to enforce role-appropriate routing at the navigation level, not just the UI level.
-
-
 
 ## Directory Structure
 
