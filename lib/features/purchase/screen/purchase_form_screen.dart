@@ -53,8 +53,6 @@ class _PurchaseFormScreenState extends ConsumerState<PurchaseFormScreen> {
     super.dispose();
   }
 
-  // ── Navigation ─────────────────────────────────────────────────────────────
-
   void _goToStep(int step) {
     final notifier = ref.read(purchaseFormNotifierProvider.notifier);
     notifier.goToStep(step);
@@ -70,7 +68,6 @@ class _PurchaseFormScreenState extends ConsumerState<PurchaseFormScreen> {
     final form = ref.read(purchaseFormNotifierProvider);
     final notifier = ref.read(purchaseFormNotifierProvider.notifier);
 
-    // Validate current step
     final err = _validate(form.currentStep, form);
     if (err != null) {
       setState(() => _stepError = err);
@@ -108,14 +105,12 @@ class _PurchaseFormScreenState extends ConsumerState<PurchaseFormScreen> {
 
   int _computeNextStep(PurchaseFormState form) {
     final cur = form.currentStep;
-    // Skip loan step if full payment
     if (cur == _kSaleDetails && !form.requiresLoanStep) return _kReview;
     return cur + 1;
   }
 
   int _computePrevStep(PurchaseFormState form) {
     final cur = form.currentStep;
-    // Skip loan step backwards if full payment
     if (cur == _kReview && !form.requiresLoanStep) return _kSaleDetails;
     return cur - 1;
   }
@@ -235,15 +230,14 @@ class _PurchaseFormScreenState extends ConsumerState<PurchaseFormScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('🎉  Sale confirmed! Generating receipt…'),
+          content: Text('🎉  Sale confirmed!'),
           backgroundColor: Color(0xFF4CAF50),
           duration: Duration(seconds: 3),
         ),
       );
 
-      // Navigate to receipt placeholder
       ref.read(purchaseFormNotifierProvider.notifier).reset();
-      context.go('/purchases/${purchase.id}/receipt');
+      context.go('/employee_dashboard');
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

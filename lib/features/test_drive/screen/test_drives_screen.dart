@@ -1,4 +1,5 @@
 import 'package:autovault/data/models/test_drive_model.dart';
+import 'package:autovault/features/auth/providers/auth_provider.dart';
 import 'package:autovault/features/test_drive/providers/test_drives_provider.dart';
 import 'package:autovault/features/test_drive/providers/test_drives_view_provider.dart';
 import 'package:autovault/features/test_drive/widgets/add_edit_test_drive_sheet.dart';
@@ -7,8 +8,6 @@ import 'package:autovault/features/test_drive/widgets/test_drive_card.dart';
 import 'package:autovault/features/test_drive/widgets/timeline_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-final _devIsOwnerProvider = StateProvider<bool>((ref) => true);
 
 class TestDrivesScreen extends ConsumerStatefulWidget {
   const TestDrivesScreen({super.key});
@@ -32,34 +31,17 @@ class _TestDrivesScreenState extends ConsumerState<TestDrivesScreen> {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
     final view = ref.watch(testDrivesViewProvider);
-    final isOwner = ref.watch(_devIsOwnerProvider);
+    final isOwner = ref.watch(currentUserProvider)!.isOwner;
 
     return Scaffold(
-      backgroundColor: cs.background,
+      backgroundColor: cs.surface,
       appBar: AppBar(
-        backgroundColor: cs.background,
+        backgroundColor: cs.surface,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
         title: Text('Test Drives',
             style: theme.textTheme.titleLarge!
                 .copyWith(fontWeight: FontWeight.w800)),
-        actions: [
-          // Dev toggle
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Row(
-              children: [
-                Text('Owner', style: theme.textTheme.labelSmall),
-                Switch(
-                  value: isOwner,
-                  onChanged: (v) =>
-                      ref.read(_devIsOwnerProvider.notifier).state = v,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
       body: Column(
         children: [
