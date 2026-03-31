@@ -7,7 +7,7 @@
 
 <br>
 
----
+
 
 ## Table of Contents
 
@@ -25,7 +25,7 @@
 - [Conventions](#conventions)
 - [Roadmap](#roadmap)
 
----
+
 
 ## Overview
 
@@ -33,12 +33,12 @@ AutoVault is a production-grade Flutter application designed for car showroom bu
 
 The application is built for Android, follows a feature-first clean architecture, and uses Firebase as its backend with Hive for offline caching.
 
----
+
 
 ## Tech Stack
 
 | Layer | Technology |
-|---|---|
+|||
 | **Framework** | Flutter 3.x (Dart) |
 | **State Management** | Riverpod (`riverpod_annotation` + code generation) |
 | **Navigation** | GoRouter (reactive auth-aware routing) |
@@ -50,7 +50,7 @@ The application is built for Android, follows a feature-first clean architecture
 | **Image Handling** | `flutter_image_compress` |
 | **Utilities** | `intl` (INR currency + date formatting), `url_launcher` |
 
----
+
 
 ## Architecture
 
@@ -74,149 +74,146 @@ Key architectural decisions:
 - **Repository pattern** — a `useMockData` flag in each repository switches between local mock data and live Firestore, enabling development without a live backend.
 - **Role-based navigation guards** — GoRouter's `redirect` callback reads `authProvider` to enforce role-appropriate routing at the navigation level, not just the UI level.
 
----
+
 
 ## Directory Structure
 
 ```
- lib
-├──  core
-│   ├──  app
-│   │   ├──  autovault.dart
-│   │   └──  route.dart
-│   ├──  firebase
-│   │   └──  firebase_options.dart
-│   ├──  theme
-│   │   ├──  font.dart
-│   │   └──  theme.dart
-│   ├──  utils
-│   │   ├──  app_constants.dart
-│   │   ├──  formatters.dart
-│   │   └──  size_config.dart
-│   └──  autovault.dart
-├──  data
-│   ├──  mock
-│   │   ├──  customer_mock_data.dart
-│   │   ├──  employee_mock_data.dart
-│   │   ├──  inventory_mock_data.dart
-│   │   ├──  mock_data.dart
-│   │   └──  test_drives_mock_data.dart
-│   └──  models
-│       ├──  add_on_model.dart
-│       ├──  car_model.dart
-│       ├──  customer_model.dart
-│       ├──  dashboard_models.dart
-│       ├──  interaction_model.dart
-│       ├──  loan_model.dart
-│       ├──  part_model.dart
-│       ├──  purchase_model.dart
-│       ├──  repayment_entry_model.dart
-│       ├──  shift_model.dart
-│       ├──  showroom_model.dart
-│       ├──  task_model.dart
-│       ├──  test_drive_activity_model.dart
-│       ├──  test_drive_model.dart
-│       └──  user_model.dart
-├──  features
-│   ├──  auth
-│   │   ├──  providers
-│   │   │   ├──  auth_provider.dart
-│   │   │   └──  sign_up_provider.dart
-│   │   ├──  screen
-│   │   │   ├──  sign_in
-│   │   │   │   ├──  forgot_password_screen.dart
-│   │   │   │   └──  sign_in_screen.dart
-│   │   │   └──  sign_up
-│   │   │       ├──  credentials.dart
-│   │   │       ├──  employee_personal.dart
-│   │   │       ├──  owner_personal.dart
-│   │   │       ├──  owner_showroom.dart
-│   │   │       ├──  role.dart
-│   │   │       └──  signup_screen.dart
-│   │   └──  widgets
-│   │       ├──  otp_input_row.dart
-│   │       ├──  password_strength_indicator.dart
-│   │       └──  role_selection_card.dart
-│   ├──  customers
-│   │   ├──  providers
-│   │   │   └──  customers_provider.dart
-│   │   ├──  screen
-│   │   │   ├──  customer_detail_screen.dart
-│   │   │   └──  customers_list_screen.dart
-│   │   └──  widgets
-│   │       ├──  add_edit_customer_sheet.dart
-│   │       ├──  customer_card.dart
-│   │       ├──  interaction_timeline.dart
-│   │       └──  loan_summary_card.dart
-│   ├──  dashboard
-│   │   ├──  providers
-│   │   │   └──  dashboard_provider.dart
-│   │   ├──  screen
-│   │   │   ├──  dashboard_screen.dart
-│   │   │   ├──  employee_dashboard_screen.dart
-│   │   │   └──  profile.dart
-│   │   └──  widgets
-│   │       ├──  customer_tile.dart
-│   │       ├──  glass_card.dart
-│   │       ├──  inventory_tile.dart
-│   │       ├──  kpi_card.dart
-│   │       ├──  loan_overview_bar.dart
-│   │       ├──  pending_tasks_card.dart
-│   │       ├──  quick_action_button.dart
-│   │       ├──  sales_chart.dart
-│   │       ├──  section_title.dart
-│   │       ├──  shift_tracker_card.dart
-│   │       ├──  test_drive_card.dart
-│   │       └──  transaction_item.dart
-│   ├──  inventory
-│   │   ├──  providers
-│   │   │   ├──  cars_provider.dart
-│   │   │   └──  parts_provider.dart
-│   │   ├──  screen
-│   │   │   ├──  car_detail_screen.dart
-│   │   │   └──  inventory_screen.dart
-│   │   └──  widgets
-│   │       ├──  add_edit_car_sheet.dart
-│   │       ├──  add_edit_part_sheet.dart
-│   │       ├──  car_card.dart
-│   │       └──  part_card.dart
-│   ├──  purchase
-│   │   ├──  providers
-│   │   │   ├──  purchase_form_provider.dart
-│   │   │   └──  purchases_provider.dart
-│   │   ├──  screen
-│   │   │   └──  purchase_form_screen.dart
-│   │   └──  widgets
-│   │       ├──  car_selector.dart
-│   │       ├──  customer_selector.dart
-│   │       ├──  loan_config_step.dart
-│   │       ├──  price_breakdown_panel.dart
-│   │       ├──  repayment_schedule_table.dart
-│   │       ├──  review_confirm_step.dart
-│   │       ├──  sale_details_step.dart
-│   │       └──  step_indicator.dart
-│   ├──  shared
-│   │   └──  widgets
-│   │       ├──  app_bar.dart
-│   │       ├──  avatar_widget.dart
-│   │       └──  section_header.dart
-│   └──  test_drive
-│       ├──  providers
-│       │   ├──  test_drives_provider.dart
-│       │   └──  test_drives_view_provider.dart
-│       ├──  screen
-│       │   ├──  test_drive_detail_screen.dart
-│       │   └──  test_drives_screen.dart
-│       ├──  widgets
-│       │   ├──  add_edit_test_drive_sheet.dart
-│       │   ├──  calendar_widget.dart
-│       │   ├──  test_drive_card.dart
-│       │   └──  timeline_view.dart
-│       └──  ROUTER_DIFF_TEST_DRIVES.dart
-└──  main.dart
+lib
+├── core
+│   ├── app
+│   │   ├── autovault.dart
+│   │   └── route.dart
+│   ├── firebase
+│   │   └── firebase_options.dart
+│   ├── theme
+│   │   ├── font.dart
+│   │   └── theme.dart
+│   ├── utils
+│   │   ├── app_constants.dart
+│   │   ├── formatters.dart
+│   │   └── size_config.dart
+│   └── autovault.dart
+├── data
+│   ├── mock
+│   │   ├── customer_mock_data.dart
+│   │   ├── employee_mock_data.dart
+│   │   ├── inventory_mock_data.dart
+│   │   ├── mock_data.dart
+│   │   └── test_drives_mock_data.dart
+│   └── models
+│       ├── add_on_model.dart
+│       ├── car_model.dart
+│       ├── customer_model.dart
+│       ├── dashboard_models.dart
+│       ├── interaction_model.dart
+│       ├── loan_model.dart
+│       ├── part_model.dart
+│       ├── purchase_model.dart
+│       ├── repayment_entry_model.dart
+│       ├── shift_model.dart
+│       ├── showroom_model.dart
+│       ├── task_model.dart
+│       ├── test_drive_activity_model.dart
+│       ├── test_drive_model.dart
+│       └── user_model.dart
+├── features
+│   ├── auth
+│   │   ├── providers
+│   │   │   ├── auth_provider.dart
+│   │   │   └── sign_up_provider.dart
+│   │   ├── screen
+│   │   │   ├── sign_in
+│   │   │   │   ├── forgot_password_screen.dart
+│   │   │   │   └── sign_in_screen.dart
+│   │   │   └── sign_up
+│   │   │       ├── credentials.dart
+│   │   │       ├── employee_personal.dart
+│   │   │       ├── owner_personal.dart
+│   │   │       ├── owner_showroom.dart
+│   │   │       ├── role.dart
+│   │   │       └── signup_screen.dart
+│   │   └── widgets
+│   │       ├── otp_input_row.dart
+│   │       ├── password_strength_indicator.dart
+│   │       └── role_selection_card.dart
+│   ├── customers
+│   │   ├── providers
+│   │   │   └── customers_provider.dart
+│   │   ├── screen
+│   │   │   ├── customer_detail_screen.dart
+│   │   │   └── customers_list_screen.dart
+│   │   └── widgets
+│   │       ├── add_edit_customer_sheet.dart
+│   │       ├── customer_card.dart
+│   │       ├── interaction_timeline.dart
+│   │       └── loan_summary_card.dart
+│   ├── dashboard
+│   │   ├── providers
+│   │   │   └── dashboard_provider.dart
+│   │   ├── screen
+│   │   │   ├── dashboard_screen.dart
+│   │   │   ├── employee_dashboard_screen.dart
+│   │   │   └── profile.dart
+│   │   └── widgets
+│   │       ├── customer_tile.dart
+│   │       ├── glass_card.dart
+│   │       ├── inventory_tile.dart
+│   │       ├── kpi_card.dart
+│   │       ├── loan_overview_bar.dart
+│   │       ├── pending_tasks_card.dart
+│   │       ├── quick_action_button.dart
+│   │       ├── sales_chart.dart
+│   │       ├── section_title.dart
+│   │       ├── shift_tracker_card.dart
+│   │       ├── test_drive_card.dart
+│   │       └── transaction_item.dart
+│   ├── inventory
+│   │   ├── providers
+│   │   │   ├── cars_provider.dart
+│   │   │   └── parts_provider.dart
+│   │   ├── screen
+│   │   │   ├── car_detail_screen.dart
+│   │   │   └── inventory_screen.dart
+│   │   └── widgets
+│   │       ├── add_edit_car_sheet.dart
+│   │       ├── add_edit_part_sheet.dart
+│   │       ├── car_card.dart
+│   │       └── part_card.dart
+│   ├── purchase
+│   │   ├── providers
+│   │   │   ├── purchase_form_provider.dart
+│   │   │   └── purchases_provider.dart
+│   │   ├── screen
+│   │   │   └── purchase_form_screen.dart
+│   │   └── widgets
+│   │       ├── car_selector.dart
+│   │       ├── customer_selector.dart
+│   │       ├── loan_config_step.dart
+│   │       ├── price_breakdown_panel.dart
+│   │       ├── repayment_schedule_table.dart
+│   │       ├── review_confirm_step.dart
+│   │       ├── sale_details_step.dart
+│   │       └── step_indicator.dart
+│   ├── shared
+│   │   └── widgets
+│   │       ├── app_bar.dart
+│   │       ├── avatar_widget.dart
+│   │       └── section_header.dart
+│   └── test_drive
+│       ├── providers
+│       │   ├── test_drives_provider.dart
+│       │   └── test_drives_view_provider.dart
+│       ├── screen
+│       │   ├── test_drive_detail_screen.dart
+│       │   └── test_drives_screen.dart
+│       └── widgets
+│           ├── add_edit_test_drive_sheet.dart
+│           ├── calendar_widget.dart
+│           ├── test_drive_card.dart
+│           └── timeline_view.dart
+└── main.dart
 ```
-
----
 
 ## User Roles
 
@@ -226,7 +223,6 @@ Full access to all modules. Can manage employees, view all analytics, approve lo
 ### Employee / Salesperson
 Scoped access to their own customers, sales, and test drives. Can create purchases and generate receipts. Cannot access global financials, other employees' data, or admin controls. Tracks attendance via the built-in shift tracker.
 
----
 
 ## Screens & Modules
 
@@ -277,12 +273,11 @@ Three-view scheduler for managing test drives across the sales pipeline.
 - **Test Drive Detail** — Status banner with pulse animation, core details, activity log, and context-sensitive action buttons. Completed drives show a **"Convert to Sale"** button that pre-fills the Purchase Form.
 - **Add/Edit Sheet** — Customer and car pickers, date/time selector, duration, employee assignment with availability check, real-time conflict detection.
 
----
 
 ## Data Models
 
 | Model | Key Fields |
-|---|---|
+|||
 | `UserModel` | id, email, firstName, lastName, phone, role, showroomId |
 | `ShowroomModel` | id, name, gstNumber, address, city, state, ownerId, showroomCode |
 | `CarModel` | id, make, model, year, vin, condition, fuelType, status, purchasePrice, sellingPrice |
@@ -297,7 +292,6 @@ Three-view scheduler for managing test drives across the sales pipeline.
 | `TestDriveActivityModel` | id, timestamp, description, type |
 | `ShiftModel` | isActive, startTime, endTime, elapsedDuration |
 
----
 
 ## Getting Started
 
@@ -336,7 +330,6 @@ For continuous generation during development:
 dart run build_runner watch --delete-conflicting-outputs
 ```
 
----
 
 
 ## Conventions
@@ -372,13 +365,11 @@ class CarsNotifier extends _$CarsNotifier { ... }
 ### File Naming
 All files use `snake_case`. All classes use `PascalCase`. Feature folders mirror the navigation structure.
 
----
 
 ## License
 
 This project is proprietary software developed for a private client. All rights reserved.
 
----
 
 <br>
 
