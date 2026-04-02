@@ -1,9 +1,50 @@
+/// Material 3 theme configuration for AutoVault.
+///
+/// This file defines the complete color schemes and theme data for both
+/// light and dark modes using Material Design 3 principles.
+///
+/// The theme includes:
+/// - **Light and dark color schemes** with comprehensive role definitions
+/// - **Extended colors** for custom brand colors
+/// - **Gradient definitions** for dashboard KPI cards
+///
+/// Color scheme structure follows Material 3 token system:
+/// - Primary: Main brand color (blue shades)
+/// - Secondary: Supporting color for less prominent elements
+/// - Tertiary: Accent color for highlights and special elements
+/// - Error: For error states and destructive actions
+/// - Surface: Background colors for cards and elevated components
+///
+/// All colors are defined as hex values and automatically adapt based on
+/// brightness (light/dark mode).
+library;
+
 import 'package:flutter/material.dart';
 
+/// Main theme configuration class for AutoVault.
+///
+/// Provides factory methods for creating light and dark [ThemeData] instances
+/// with custom color schemes. Takes a [TextTheme] as input to apply custom
+/// fonts from the font.dart configuration.
+///
+/// Usage:
+/// ```dart
+/// TextTheme textTheme = createTextTheme(context, "Manrope", "Inter");
+/// MaterialTheme theme = MaterialTheme(textTheme);
+/// ThemeData lightTheme = theme.light();
+/// ThemeData darkTheme = theme.dark();
+/// ```
 class MaterialTheme {
+  /// Custom text theme with font configuration.
   final TextTheme textTheme;
+
+  /// Creates a MaterialTheme with the given text theme.
   const MaterialTheme(this.textTheme);
 
+  /// Returns the light mode color scheme.
+  ///
+  /// Based on Material 3 color system with a blue primary color.
+  /// Used during daytime or when the user prefers light mode.
   static ColorScheme lightScheme() {
     return const ColorScheme(
       brightness: Brightness.light,
@@ -55,6 +96,10 @@ class MaterialTheme {
     );
   }
 
+  /// Returns the dark mode color scheme.
+  ///
+  /// Based on Material 3 color system with adjusted colors for dark backgrounds.
+  /// Used during nighttime or when the user prefers dark mode.
   static ColorScheme darkScheme() {
     return const ColorScheme(
       brightness: Brightness.dark,
@@ -106,9 +151,21 @@ class MaterialTheme {
     );
   }
 
+  /// Creates a complete light theme with the light color scheme.
   ThemeData light() => theme(lightScheme());
+
+  /// Creates a complete dark theme with the dark color scheme.
   ThemeData dark() => theme(darkScheme());
 
+  /// Builds a complete [ThemeData] from a [ColorScheme].
+  ///
+  /// Applies:
+  /// - Material 3 design system
+  /// - Custom text theme with fonts
+  /// - Surface colors for scaffolds and canvas
+  /// - Color-matched text colors
+  ///
+  /// [colorScheme] - The color scheme to apply (light or dark).
   ThemeData theme(ColorScheme colorScheme) => ThemeData(
         useMaterial3: true,
         brightness: colorScheme.brightness,
@@ -121,12 +178,31 @@ class MaterialTheme {
         ),
       );
 
+  /// Extended custom colors for brand-specific use cases.
+  ///
+  /// Currently empty but can be used to define additional color families
+  /// beyond the standard Material 3 primary/secondary/tertiary system.
   List<ExtendedColor> get extendedColors => [];
 }
 
+/// Represents an extended color family for custom brand colors.
+///
+/// Provides light and dark variants of a custom color for use throughout
+/// the app while maintaining Material 3 color system principles.
 class ExtendedColor {
-  final Color seed, value;
-  final ColorFamily light, dark;
+  /// The seed color used to generate the color family.
+  final Color seed;
+
+  /// The primary color value.
+  final Color value;
+
+  /// Light mode color family variant.
+  final ColorFamily light;
+
+  /// Dark mode color family variant.
+  final ColorFamily dark;
+
+  /// Creates an extended color with light and dark variants.
   const ExtendedColor({
     required this.seed,
     required this.value,
@@ -135,8 +211,27 @@ class ExtendedColor {
   });
 }
 
+/// A family of four related colors following Material 3 color roles.
+///
+/// Provides the standard Material 3 color roles:
+/// - color: The main color
+/// - onColor: Text/icon color to use on top of [color]
+/// - colorContainer: A lighter variant for containers
+/// - onColorContainer: Text/icon color to use on top of [colorContainer]
 class ColorFamily {
-  final Color color, onColor, colorContainer, onColorContainer;
+  /// The main color of this family.
+  final Color color;
+
+  /// Color for text/icons on top of [color].
+  final Color onColor;
+
+  /// A lighter container variant of [color].
+  final Color colorContainer;
+
+  /// Color for text/icons on top of [colorContainer].
+  final Color onColorContainer;
+
+  /// Creates a color family with four related colors.
   const ColorFamily({
     required this.color,
     required this.onColor,
@@ -145,26 +240,51 @@ class ColorFamily {
   });
 }
 
+/// Custom application colors for gradients and special UI elements.
+///
+/// Defines gradient color stops used in dashboard KPI cards to create
+/// visually distinctive backgrounds for different metric types.
+///
+/// All gradients use semi-transparent blue-teal combinations for a
+/// modern, professional appearance.
 class AppColors {
+  // Private constructor to prevent instantiation
   AppColors._();
+
+  /// Gradient for revenue/earnings KPI cards.
+  ///
+  /// Blue-to-teal-to-blue gradient with 47% opacity.
+  /// Used in owner dashboard for total revenue metrics.
   static const List<Color> revenueGradient = [
     Color(0x7777A1D3),
     Color(0x7779CBCA),
     Color(0x7777A1D3),
   ];
 
+  /// Gradient for sales count KPI cards.
+  ///
+  /// Teal-to-blue-to-teal gradient with 47% opacity.
+  /// Used in dashboards for sales count and conversion metrics.
   static const List<Color> salesGradient = [
     Color(0x7779CBCA),
     Color(0x7777A1D3),
     Color(0x7779CBCA),
   ];
 
+  /// Gradient for active loans KPI cards.
+  ///
+  /// Blue-to-teal-to-blue gradient with 47% opacity.
+  /// Used in loan overview sections and financing metrics.
   static const List<Color> loansGradient = [
     Color(0x7777A1D3),
     Color(0x7779CBCA),
     Color(0x7777A1D3),
   ];
 
+  /// Gradient for test drive KPI cards.
+  ///
+  /// Teal-to-blue-to-teal gradient with 47% opacity.
+  /// Used in test drive scheduling and tracking widgets.
   static const List<Color> testDriveGradient = [
     Color(0x7779CBCA),
     Color(0x7777A1D3),
